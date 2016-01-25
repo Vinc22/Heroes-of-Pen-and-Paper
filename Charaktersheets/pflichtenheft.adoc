@@ -1,0 +1,323 @@
+﻿= Pflichtenheft
+
+== Weinstube zur fröhlichen Reblaus
+
+__Version:__    *3.0*
+
+__Status:__     *Final*
+
+__Stand:__      *17.11.2015*
+
+== Zusammenfassung
+Dieses Dokument stellt die Planung und Zielstellung des Projektes dar.
+Die Software wird in mehreren Schritten strukturiert und ebenjene Strukturen nachfolgend 
+nochmals analysiert, sd. ein jeder verstehen kann, wie das Programm grundlegend arbeitet.
+Zusätzlich enthalten sind bestimmte Kriterien, welche zur Erfüllung des Arbeitsauftrages 
+nötig sind und solche, die eine nicht geforderte, aber nützliche Funktion zur Erweiterung
+der fertigen Software darstellen.
+
+== Inhaltsverzeichnis
+<<anchor-1,1. Aufgabenstellung>> +
+<<anchor-2,2. Fachlicher Überblick>> +
+<<anchor-3,3. Systemgrenze - Top-Level-Architektur>> +
+<<anchor-4,4. Anwendungsfälle>> +
+<<anchor-5,5. Anforderungen>> +
+<<anchor-6,6. GUI-Prototyp>> +
+<<anchor-7,7. Datenmodell>> +
+<<anchor-8,8. Akzeptanztestfälle>> +
+<<anchor-9,9. Offene Punkte>> +
+
+[[anchor-1]]
+== 1. Aufgabenstellung und Zielsetzung
+
+Zitat Aufgabenstellung:
+
+„Die Weinstube Zur fröhlichen Reblaus ist bekannt für ihre exzellenten Weine deutscher
+Herkunft, die zu einem erschwinglichen Preis angeboten werden, für die stets freundlichen
+Bedienungen und die urig-gemütliche Atmosphäre.
+Wein und verschiedene andere Getränke, Brot, diverse Käsesorten und kleine Snacks laut
+Tageskarte bestellt man bei der Bedienung. Bestellungen werden pro Tisch (identifiziert
+durch eine Nummer) aufgenommen und an die Küche weitergeleitet. 
+Im Laufe des gemütlichen Beisammenseins werden häufig Nachbestellungen getätigt.
+Wollen Besucher die Weinstube verlassen, erhalten sie auf Verlangen von der Bedienung die
+Rechnung präsentiert. Es herrscht ein reges Kommen und Gehen. 
+Da nicht immer alle Gäste, die an einem Tisch sitzen, gleichzeitig aufbrechen, 
+muss es möglich sein, die von den Gästen angegebenen Speisen und Getränke
+aus der Gesamtzeche des Tischs auszugliedern und gesondert abzurechnen. 
+Leider kommt es immer manchmal vor, dass Posten vergessen werden und von der Bedienung selbst 
+zu tragen sind. 
+Bezahlung kann auch auf Wunsch der Bedienung erfolgen, wenn diese am Ende ihrer Schicht abkassiert.
+Eingenommenes Bargeld wird von den Bedienungen in ihren eigenen Geldbeuteln verwaltet.
+Es ist üblich, dass zu Beginn der Schicht eigenes Wechselgeld mitgebracht wird. Trinkgelder
+fließen mit in diesen Geldbeutel. 
+Bei Geldwechselproblemen helfen entweder andere Bedienungen oder die Zentralkasse, 
+an der gegen Ende der Schicht eine personengebundene Abrechnung erfolgt. 
+In die Kasse des Restaurants fließen die Bedienungspreise (10% unterden Preisen auf der Tageskarte) 
+der von der Bedienung in der Küche georderten Speisen und Getränke. 
+Den Rest nimmt die Bedienung mit heim.
+Besonders beliebt sind die in der Fröhlichen Reblaus alle zwei Monate stattfindenden
+Weinproben: An diesen Tagen werden ausschließlich Weine eines Winzers ausgeschenkt.
+Alle Winzer der von der Fröhlichen Reblaus geführten Weine veranstalten reihum die
+Weinproben. An solchen Tagen getrunkene Weine werden mit dem jeweiligen Winzer zur
+Hälfte des normalen Preises abgerechnet und diese Ermäßigung wird voll an die Gäste
+weitergereicht.
+In unregelmäßigen Abständen finden auf der Bühne der Fröhlichen Reblaus
+Kleinkunstveranstaltungen mit Nachwuchskünstlern statt: Dichterlesungen, Kabarett, Artistik,
+Musikdarbietungen usw. An solchen Abenden wird zusätzlich ein Eintrittspreis von 7,- EUR
+verlangt. 
+
+
+Die Fröhlichen Reblaus wünscht eine Software, die diese Geschäftsabläufe und weitere
+Hintergrundaktivitäten unterstützt. 
+Diese sind:
+
+• Zusammenstellen einer Tageskarte (durch Modifizieren der Karte des vergangenen Tages), +
+• Nachbestellungen bei Lieferanten und Abrechnung, +
+• Veranstaltungsprogramm und Abrechnung mit Künstlern, +
+• täglich Abrechnung des Betriebsergebnisses, +
+• Personalverwaltung
+
+
+[[anchor-2]]
+== 2. Fachlicher Überblick
+Dieses Projekt soll den Betrieb einer Weinstube vereinfachen. Mittels unserer Software wird man quasi 
+jede Tätigkeit in einer Weinstube managen können, darunter sind:
+
+- Personalverwaltung
+- Lagerverwaltung
+- Eventplanung
+- Kartenplanung
+- Tischabrechnung.
+
+Jeder dieser Anstriche vereinfacht die Weinstuben-Wirtschaft und ist somit ein wertvoller
+Begleiter für jeden Betreiber.
+
+[[anchor-3]]
+== 3. Systemgrenze und Top-Level-Architektur
+
+=== Kontextdiagramm
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/852fb9289c178d3e6922522b51765e5e1506e7f0/organisation/diagrams
+image::Kontextdiagramm.png[Error,800,600]
+
+
+=== Top-level architecture
+
+Wie man in dem Diagramm sieht, ist das Programm in 3 Teile gespalten, welche untereinander aber dennoch kommunizieren können.
+Der Nutzer kann über den Browser einen Befehl an die modulierte Weinstube senden und diese werden je nach Rechten auch übermittelt, ausgeführt bzw. gar nicht erst angezeigt. Je nach Aufgabe greift die Weinstube auf die Datenbank zu und ändert dort gewisse Einträge. Somit hat der Endnutzer nie direkten Zugriff auf die Datenbank oder die Weinstube selbst, sondern kann nur auf die über den Browser nach Rechten zugeteilten Funktionen zugreifen.
+
+[[anchor-4]]
+== 4. Anwendungsfälle
+
+=== Überblick Anwendungsfalldiagramm
+
+[options="header"]
+|===
+|Anwender |Beschreibung |
+|Manager |Der Manager hat Zugriff auf alle Bereiche der Website.
+Er kann unter anderem Personal und Lager verwalten, Bestellungen überprüfen und 
+Bilanzen einsehen.|
+|Bedienung | Kann Rechnungen erstellen und Karten modifizieren (Tageskarte)|
+|===
+
+// See http://asciidoctor.org/docs/user-manual/#tables
+=== Anwendungsfallbeschreibungen
+
+===== 1. Anwendungsfall: Lager
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/0b16d79260e11606b7cfe6f3728c03623992afbe/organisation/diagrams/
+image::Anwendungsfall3.png[Error,450,400]
+
+Auf das Lager hat nur der Manager Zugriff. Er kann den Lagerbestand einsehen und, wenn notwendig, Produkte nachbestellen.
+Hierzu sendet er eine "LieferantenBestellung" an den gewünschten Lieferanten. Der Bestand des Produktes wird im Lager mit Abschicken der Bestllung aktualisiert.
+
+
+===== 2. Anwendungsfall: Management
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/0b16d79260e11606b7cfe6f3728c03623992afbe/organisation/diagrams/
+image::Anwendungsfall2.png[Error,500,600]
+
+Das Management ist das aktivste Subsystem des Programms. Der Manager stellt Mitarbeiter ein, kann dessen Attribute bearbeiten und ihn auch entlassen. Mit dem Einstellen in die Firma legt der 
+Manager auch das erste Passwort des Mitarbeiters fest, mit dem er sich in das Programm einloggen kann. Weiterhin ermittelt er das Gehalt des Mitarbeiters und verwaltet die Zentralkasse.
+Außerdem verwaltet er die Veranstaltungen des Weinkellers. Er bucht Events, bearbeitet diese und kann sie auch absagen. Als letztes stellt er die Speise- und Tageskarten zusammen.
+
+
+===== 3. Anwendungsfall: Bestellabwicklung
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/0b16d79260e11606b7cfe6f3728c03623992afbe/organisation/diagrams/
+image::Anwendungsfall1.png[Error,450,450]
+
+
+Eine Bestellung wird von einem Tisch abgegeben. An diesem können mehrere Personen sitzen, welche auch getrennt voneinander bezahlen können.
+Hierzu stellt die Bedienung auf Anfrage der Kunden eine Rechnung, die einen Teil oder alle Produkte der Bestellung umfasst. Außerdem kann eine bereits aufgegebene Bestellung bearbeitet werden. 
+Das heißt Produkte können hinzugefügt oder entfernt werden. Die Bestellung wird stetig an die Küche weitergeleitet. Ist ein Tisch abgearbeitet und sind alle Gäste gegangen, wird der Tisch von der Bedienung freigegeben.
+
+
+[[anchor-5]]
+== 5. Anforderungen
+
+=== Muss-Kriterien
+
+===== 1. Personalverwaltung +
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/dd88a34ec2fd5336f6350d61a3a69fdb3639598c/organisation/diagrams/
+image::Personalverwaltung.png[Error,400,400]
+
+Der Manager hat das Recht sein Personal zu verwalten. Er kann Mitarbeiter einstellen (erstellen) und entlassen, bzw. bearbeiten. Letzteres beinhaltet uA. Gehaltsanpassung, Änderung der Anschrift, (...).
+
+===== 2. Lagerverwaltung +
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/dd88a34ec2fd5336f6350d61a3a69fdb3639598c/organisation/diagrams/
+image::Lagerverwaltung.png[Error,400,400]
+
+Der Manager kann auch das Lager verwalten, in dem er Positionen erstellt oder löscht. Die Bearbeitung umfasst zB. 
+Preisänderungen. 
+
+===== 3. Accountsystem +
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/dd88a34ec2fd5336f6350d61a3a69fdb3639598c/organisation/diagrams/
+image::Accountsystem.png[Error,700,600]
+
+Standardmäßig ist der Nutzer eine Bedienung. Sie hat die kleinsten Rechte und kann im Wesentlichen nur Tische verwalten. Der Manager jedoch erhält über den Login voll Zugriffsrechte und kann alle Belange der Weinstube nach Belieben ändern.
+
+===== 4. Tischverwaltung (und Abrechnung) +
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/dd88a34ec2fd5336f6350d61a3a69fdb3639598c/organisation/diagrams/
+image::Anwendungsfall1.png[Error,400,400]
+
+Die umfangreiche Verwaltung der Tische sieht für eine Bedienung folgende Unterpunkte vor: +
+
+- Bestellungen aufnehmen und bearbeiten (erweitern) +
+- Die Rechnung (teilweise) erstellen +
+- Tische als belegt registrieren und wieder freigeben +
+
+===== 5. Eventplanung +
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/dd88a34ec2fd5336f6350d61a3a69fdb3639598c/organisation/diagrams/
+image::Eventplanung.png[Error,400,400]
+
+Der Manager hat Zugriff auf die Eventplanung. Dort kann er ein Event erstellen, löschen und bearbeiten.
+Er kann dem Event einen Namen geben, Eintritt bestimmen und die Uhrzeit festlegen.
+
+===== 6. Kartenverwaltung + Tageskarte +
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/dd88a34ec2fd5336f6350d61a3a69fdb3639598c/organisation/diagrams/
+image::Kartenverwaltung.png[Error,800,400]
+
+Der Manager kann eine Speiße- und Getränkekarte anlegen und beliebig verwalten. Parallel existiert die 
+Tageskarte, welche sich immer aus dem Zustand des Vortages heraus bearbeiten lässt.
+
+=== Kann-Kriterien
+
+- Schichtenverwaltung der Bedienung +
+-> Bedienungen lassen sich in Schichten einteilen eventuell sogar mit dem Kalender +
+- Kalender für Events +
+-> Events lassen sich bequem im Kalender anlegen und verwalten +
+- Einsicht, welche Bedienung gerade welchen Tisch bedient +
+-> Eine Bedienung kann sich für einen oder mehrere Tische registrieren (Über GeräteID) +
+   und der Manager kann einsehen, welche Bedienung wo ist. +
+- Vorausplanung der Tageskarte +
+-> Die Tageskarten können für eine bestimmte Anzahl an Tagen schon im Voraus geplant werden. +
+- Wiederkehrende Menüoptionen +
+-> Es lassen sich Menüs konfigurieren, die an bestimmten Wochentagen wiederkehren.
+  zB. ein Schnitzeltag Mittwoch.
+  
+[[anchor-6]]
+== 6. GUI Prototyp
+
+=== Überblick: Dialoglandkarte
+
+https://github.com/st-tu-dresden-2015/swt15w37/blob/852fb9289c178d3e6922522b51765e5e1506e7f0/organisation/MockUp%20der%20GUI/MockUp%20der%20GUI.pdf[MockUp als PDF-File @Github]
+
+=== Dialogbeschreibung
+==== Legende: 
+              
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/d997550104b6d955a24a3369b98b5e8392fceefa/organisation/MockUp%20der%20GUI/
+image::Grün.png[Error,20,20] 
+Zuletzt gewählter Reiter +
+ 
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/d997550104b6d955a24a3369b98b5e8392fceefa/organisation/MockUp%20der%20GUI/
+image::Orange.png[Error,20,20]
+Anwählbare Reiter spezifisch im momentanen Fenster +
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/d997550104b6d955a24a3369b98b5e8392fceefa/organisation/MockUp%20der%20GUI/
+image::Lila.png[Error,20,20]
+Anwählbare Reiter generell
+
+===== Für Tische: 
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/d997550104b6d955a24a3369b98b5e8392fceefa/organisation/MockUp%20der%20GUI/
+image::Grün.png[Error,20,20] 
+Freier Tisch
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/d997550104b6d955a24a3369b98b5e8392fceefa/organisation/MockUp%20der%20GUI/
+image::Rot.png[Error,20,20]
+Belegter Tisch
+
+[[anchor-7]]
+== 7. Datenmodell
+
+=== Überblick: Klassendiagramm
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/dd88a34ec2fd5336f6350d61a3a69fdb3639598c/organisation/diagrams/
+image::Analyse-Klassendiagramm.png[Error,800,780]
+
+=== Klassen und Enumerationen
+// See http://asciidoctor.org/docs/user-manual/#tables
+[options="header"]
+|===
+|Klasse/Enumeration |Beschreibung |
+|Produkte |Produkte enthält alle Lebensmittel, welche in der Weinstube
+verfügbar sind. Name, Preis, Anzahl und eine kleine Beschreibung dienen zur Spezifizierung eines
+jeden Produkt-Objektes. Lebensmittel liegen (sofern Anzahl >0) im Lager. |
+|Lager |Das Lager beinhaltet alle Produkte der Weinstube. |
+|Manager |Der Manager kann auf das Lager zugreifen und Bestellungen aufgeben.
+Er hat zusätzlich Zugriff auf die Finanzen und kann Arbeiter (Bedienung) einstellen. Auch die 
+(Tages-)Karte hat er immer im Griff. |
+|Veranstaltung |Die Veranstaltung ist fimenextern. Dort kann der Manager 
+bestimmte Unterhaltungsprogramme buchen. |
+|Karte |Aus den Produkten des Lagers vom Manager erstellt. |
+|Tageskarte |Wird täglich neu vom Manager erstellt und verhält sich wie Karte. |
+|Bedienung |Die Bedienung hat Zugriff auf den Tisch und die Rechnung. Sie 
+registriert Bestellungen und kann abrechnen. Trinkgeld kann sie selbst verwalten. |
+|Person |Personen sind mit allerlei Attributen identifizierbar und bilden die Grundklasse 
+für Manager, Bedienung und Lieferant. |
+|Lieferant |Der Lieferant gehört einer Firma an und liefert Lieferantenbestellungen an
+die Weinstube. |
+|Lieferantenbestellung |Enthält die in der Bestellung-Oberklasse aufgeführten Produkte und 
+dient dem Lieferanten als Bestellung.|
+|Bestellung |Diese enthält Produkte in Anzahl und Nr. und dient der Ausgabe zur 
+Orientierung. |
+|Tischbestellung |Alle Posten, die an einem Tisch gefordert werden, sind enthalten. |
+|Rechnung |Die Rechnung enthält eine Liste der pro Tisch bestellten Lebensmittel und 
+deren Beträge. Sie ist auch mit einem Datum versehen. |
+|Wein |Wein erbt Eigenschaften von Produkt und hat selbst das Attribut "Jahrgang". |
+|Weinprobe |Die Weinprobe ist eine Veranstaltung, bei welcher der Wein eines bestimmten
+Winzer nur 50% kostet. |
+|Winzer | Sie stellen den Wein her und sind wichtig für die Weinprobe. |
+|===
+
+[[anchor-8]]
+== 8. Aktzeptanztestfälle
+[options="header"]
+|===
+|ID |Name |Beschreibung|Erwarteter Zustand
+|0|Manager registriert Mitarbeiter|Der Manager registriert einen neuen Mitarbeiter mit Hilfe des Registrierungsformulars|Ein neues Mitarbeiterobjekt befindet sich in der Datenbank mit den vom Manager eingegebenen Details (Name,Vorname,Gehalt,Adresse,Telefon)
+|1|Manager erstellt Tageskarte |Der Manager erstellt eine neue Tageskarte mit Produkten, die er aus der Speisekarte auswählt. Die Vorrätigkeit dieser Produkte wird automatisch vom Lager geprüft.| Die Tageskarte befindet sich nun in der Datenbank, mit den ausgewählten Produkten.
+|2 |Bestellung aufgeben|Der Kunde gibt eine Bestellung auf, deren Produkte von der Bedienung aus der ProduktListe ausgewählt werden. Die Vorrätigkeit wird vom Lager gecheckt und die Bestellung wird bestätigt. Der Lagerbestand wird aktualisiert.|Ein neues BestellungsObjekt befindet sich in der Datenbank, das die Produkte des Kunden (sofern vorrätig) enthält. Der Lagerbestand wurde auf die neue Anzahl des Produkts aktualisiert.
+|3 |Stornierung|Der Kunde storniert einige Produkte, welche von der Bedienung aus der Bestellung entfernt und im Lager hinzugefügt werden|Das bearbeitete BestellungsObjekt liegt in der Datenbank und der Lagerbestand wurde aktualisiert.
+|4 |Zahlung|Auf Verlangen des Kunden wird von der Bedienung eine Rechnung mit ausgewählten Produkten der Bestellung des Tischs erstellt. Der Preis wird vom Kunden eingenommen und zum Portmonaisse der Bedienung hinzugefügt. Die bezahlten Produkte werden aus der Bestellung entfernt.|Die bezahlten Produkte wurden von der Bestellung abgezogen und das aktualliesierte BestellungsObjekt liegt in der Datenbank.
+|===
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/master/organisation/diagrams/
+image::MitarbeiterSequenz.jpg[MitarbeiterSequenz,800,780]
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/master/organisation/diagrams/
+image::TagesKarteSequenz.jpg[MitarbeiterSequenz,800,780]
+
+:imagesdir: https://github.com/st-tu-dresden-2015/swt15w37/blob/master/organisation/diagrams/
+image::BestellSequenz.jpg[MitarbeiterSequenz,800,780]
+
+
+[[anchor-9]]
+== 9. Offene Punkte
+
