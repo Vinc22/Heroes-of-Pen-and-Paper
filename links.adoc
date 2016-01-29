@@ -1,0 +1,7 @@
+=== d20 pf srd
+englisch, Seite mit vermutlich meistem Inhalt inklusive viel third-party material. +
+http://www.d20pfsrd.com/
+
+=== Archives of Nethys
+offizielles Paizo Regelarchiv, enthält deshalb z.B. Daten zu Paizo Produkten wie Abenteuerpfaden oder Göttern. +
+http://archivesofnethys.com/
